@@ -1,48 +1,66 @@
 package parsingdata;
 
+import kong.unirest.HttpResponse;
+import kong.unirest.Unirest;
+import org.json.JSONArray;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.json.JSONObject;
 
+import javax.swing.*;
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
+//import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class DataParser {
-    public static void main(String[] args) throws IOException {
-        // https://www.linkedin.com/company/epam-systems/
-        // https://ucu.edu.ua/
-        // https://lnu.edu.ua/en
-        // https://lpnu.ua/
-        Document document = fetchHTML("https://lnu.edu.ua/en");
-        document.title();
-        String data = String.valueOf(document);
-        CompanyInfo info = getData(data);
-        System.out.println(info);
+
+public class BrandFetchParser {
+    String API_KEY = "l2SS4e5dPxPBfV6ATcSXg64SyoOcaeiD6lOQuSjD+54=";
+
+    public static void main(String[] args) {
+        CompanyInfo companyInfo = CompanyInfo.builder().build();
+        getData("ucu.edu.ua", companyInfo);
+        System.out.println(companyInfo);
     }
 
-    public static Document fetchHTML(String URL) throws IOException {
-        // token = l2SS4e5dPxPBfV6ATcSXg64SyoOcaeiD6lOQuSjD+54=
-        return Jsoup.connect(URL)
-                .data("query", "Java")
-                .userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.38 Safari/537.36")
-                .cookie("auth", "token")
-                .timeout(3000)
-                .ignoreHttpErrors(true)
-//                .userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.38 Safari/537.36")
-//                .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36")
-                .post();
-    }
 
-    public static CompanyInfo getData(String data) {
-        return CompanyInfo.builder()
-                .name(findName(data))
-                .twitter(findTwitter(data))
-                .facebook(findFacebook(data))
-                .logo(findLogo(data))
-                .icon(findIcon(data))
-                .employees(findEmployees(data))
-                .address(findAddress(data))
-                .build();
+    public static void getData(String domain, CompanyInfo companyInfo) {
+        HttpResponse<String> response = Unirest.get(String.format("https://api.brandfetch.io/v2/brands/%s", domain))
+                .header("Authorization", "Bearer l2SS4e5dPxPBfV6ATcSXg64SyoOcaeiD6lOQuSjD+54=")
+                .asString();
+
+        JSONObject body = new JSONObject(response.getBody());
+
+        JSONArray links = body.getJSONArray("links");
+        JSONArray logos = body.getJSONArray("logos");
+
+        // gets links
+        for (int i = 0; i < links.length(); i++) {
+            JSONObject link = (JSONObject)links.get(i);
+            switch (link.get("name").toString()) {
+                case "facebook" ->
+                        companyInfo.setFacebook(link.get("url").toString());
+                case "twitter" ->
+                        companyInfo.setTwitter(link.get("url").toString());
+            }
+        }
+
+        // gets icons
+        for (int i = 0; i < logos.length(); i++) {
+            JSONObject logo = (JSONObject)logos.get(i);
+            switch (logo.get("type").toString()) {
+                case "icon" ->
+                    companyInfo.setIcon(((JSONObject)((JSONArray)logo.get("formats")).get(0)).get("src").toString());
+                case "logo" ->
+                    companyInfo.setLogo(((JSONObject)((JSONArray)logo.get("formats")).get(0)).get("src").toString());
+            }
+        }
     }
 
     private static String findName(String data) {

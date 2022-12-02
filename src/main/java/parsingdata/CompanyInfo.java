@@ -3,24 +3,21 @@ package parsingdata;
 
 import lombok.*;
 
+import java.io.IOException;
+
 @Getter
 @Setter
 @Builder
 @ToString
 public class CompanyInfo {
-    public static void main(String[] args) {
-        CompanyInfo data = CompanyInfo.builder()
-                .name("name")
-                .twitter("twit")
-                .facebook("mordoknyzhka")
-                .logo("O(log)")
-                .icon("icona")
-                .employees("-1")
-                .address("sserdda")
-                .build();
-        System.out.println(data);
+    public static void main(String[] args) throws IOException {
+        CompanyInfo companyInfo = CompanyInfo.builder().build();
+        BrandFetchParser.getData("ucu.edu.ua", companyInfo);
+        PDLParser.getData("ucu.edu.ua", companyInfo);
+        JSOUPParser.getTwitter("ucu.edu.ua", companyInfo);
+        JSOUPParser.getAddress("ucu.edu.ua", companyInfo);
+        System.out.println(companyInfo);
     }
-
     private String name;
     private String twitter;
     private String facebook;
