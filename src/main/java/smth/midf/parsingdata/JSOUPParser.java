@@ -1,4 +1,4 @@
-package parsingdata;
+package smth.midf.parsingdata;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static parsingdata.QueryType.TWITTER;
+//import static parsingdata.QueryType.TWITTER;
 
 public class JSOUPParser {
     public static final String GOOGLE_SEARCH = "https://www.google.com/search?q=%s&num=10";

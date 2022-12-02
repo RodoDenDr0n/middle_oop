@@ -1,4 +1,4 @@
-package parsingdata;
+package smth.midf.parsingdata;
 
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;

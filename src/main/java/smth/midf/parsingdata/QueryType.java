@@ -1,4 +1,4 @@
-package parsingdata;
+package smth.midf.parsingdata;
 
 public enum QueryType {
     NAME("name"),
