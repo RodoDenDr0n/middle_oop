@@ -3,19 +3,10 @@ package smth.midf.parsingdata;
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
 import org.json.JSONArray;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
+
 import org.json.JSONObject;
 
-import javax.swing.*;
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLEncoder;
-//import java.net.http.HttpResponse;
-import java.nio.charset.StandardCharsets;
-import java.util.Scanner;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

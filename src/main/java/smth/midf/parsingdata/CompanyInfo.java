@@ -1,6 +1,5 @@
 package smth.midf.parsingdata;
 
-
 import lombok.*;
 
 import java.io.IOException;
@@ -11,12 +10,12 @@ import java.io.IOException;
 @ToString
 public class CompanyInfo {
     public static void main(String[] args) throws IOException {
-        CompanyInfo companyInfo = CompanyInfo.builder().build();
-        BrandFetchParser.getData("ucu.edu.ua", companyInfo);
-//        PDLParser.getData("ucu.edu.ua", companyInfo);
-        JSOUPParser.getTwitter("ucu.edu.ua", companyInfo);
-        JSOUPParser.getAddress("ucu.edu.ua", companyInfo);
-        System.out.println(companyInfo);
+//        CompanyInfo companyInfo = CompanyInfo.builder().build();
+//        BrandFetchParser.getData("ucu.edu.ua", companyInfo);
+////        PDLParser.getData("ucu.edu.ua", companyInfo);
+//        JSOUPParser.getTwitter("ucu.edu.ua", companyInfo);
+//        JSOUPParser.getAddress("ucu.edu.ua", companyInfo);
+//        System.out.println(companyInfo);
     }
     private String name;
     private String twitter;

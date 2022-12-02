@@ -9,4 +9,5 @@ public class HomeController {
     public String base() {
         return "index.html";
     }
+
 }
