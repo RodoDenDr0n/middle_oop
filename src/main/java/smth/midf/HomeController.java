@@ -1,31 +1,43 @@
 package smth.midf;
 
+import org.json.JSONException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import smth.midf.parsingdata.CompanyInfo;
 import smth.midf.parsingdata.Parser;
 
 import java.io.IOException;
+import java.util.Optional;
 
-@RestController
+//@RestController
 //@RequestMapping
 @Controller
 public class HomeController {
-    private CompanyInfo companyInfo;
+    private CompanyInfo companyInfo = CompanyInfo.builder().build();
+
     @GetMapping(value = "/")
     public String base() {
         return "index.html";
     }
 
-    @PostMapping
-    public void addCompany(@RequestBody String url) throws IOException {
+    @GetMapping(path = "/{domain}")
+    public Optional<CompanyInfo> sendResponse(@PathVariable String domain) throws IOException, JSONException {
         companyInfo = CompanyInfo.builder().build();
-        Parser.getData(url, companyInfo);
+        Parser.getData(domain, companyInfo);
+        return Optional.ofNullable(companyInfo);
     }
 
-    @GetMapping(path = "/{url}")
-    public CompanyInfo yahoo(@PathVariable String url){
-        return companyInfo;
+    @PostMapping
+    public void addCompany(@RequestBody String domain) throws IOException, JSONException {
+        companyInfo = CompanyInfo.builder().build();
+        Parser.getData(domain, companyInfo);
+    }
+
+
+    @ExceptionHandler({IOException.class, JSONException.class})
+    @GetMapping (path = "/ex")
+    public String handle(){
+        return "exception.html";
     }
 
 
