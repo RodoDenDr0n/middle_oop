@@ -7,23 +7,11 @@
 <body>
 <h1>DataFinder</h1>
 <form>
-    <form id="contact-form" action="" method="POST">
+    <form id="contact-form" action="/result" method="POST">
         <input type="text" id="domain" name="domain">
-        <a href="#" id="submit">Submit</a>
+        <input type="submit" formaction="/result">
     </form>
-    <pre id="result"></pre>
+    <p id="result"></p>
 </form>
 </body>
-
-<!--<script>-->
-<!--    document.getElementById("submit").onclick = function () {-->
-<!--        const api_key = "";-->
-<!--        let data = {"website": document.getElementById("domain").value};-->
-<!--        console.log("https://api.peopledatalabs.com/v5/company/clean?" + new URLSearchParams(data))-->
-<!--        fetch("https://api.peopledatalabs.com/v5/company/clean?" + new URLSearchParams(data), {-->
-<!--            method: "GET",-->
-<!--            headers: {"X-API-KEY": api_key}-->
-<!--        }).then(res => res.json()).then(x => document.getElementById("result").innerText = JSON.stringify(x, null, 2));-->
-<!--    }-->
-<!--</script>-->
 </html>
