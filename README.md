@@ -14,3 +14,12 @@
 
 
 As can be seen, the aplication is reusable  :)
+
+The UML Diagrams:
+
+<img width="928" alt="Screenshot 2022-12-03 at 16 35 21" src="https://user-images.githubusercontent.com/92575094/205446241-c10a0700-b4c9-441c-b443-a63b7431861d.png">
+
+Use Case Diagram:
+
+
+<img width="1025" alt="Screenshot 2022-12-03 at 16 36 14" src="https://user-images.githubusercontent.com/92575094/205446275-a4162854-8687-44c5-9df3-2bc688c3a85c.png">
